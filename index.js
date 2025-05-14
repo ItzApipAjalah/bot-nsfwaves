@@ -257,6 +257,9 @@ bot.on('callback_query', async (callbackQuery) => {
         }
     } else if (data === 'deposit') {
         try {
+            // Get username from callback query
+            const username = callbackQuery.from.username ? `@${callbackQuery.from.username}` : callbackQuery.from.first_name;
+
             // Delete old deposit message if exists
             const oldMessageId = userDepositMessages.get(chatId);
             if (oldMessageId) {
@@ -604,6 +607,7 @@ bot.onText(/\/profile/, async (msg) => {
 // Handle /deposit command
 bot.onText(/\/deposit/, async (msg) => {
     const chatId = msg.chat.id;
+    const username = msg.from.username ? `@${msg.from.username}` : msg.from.first_name;
     
     try {
         // Delete old deposit message if exists
